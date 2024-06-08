@@ -1,0 +1,26 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+<h1>Детали рассылки</h1>
+
+<p>Тема: {{ object.mailing.message.subject }}</p>
+<p>Текст: {{ object.mailing.message.text }}</p>
+<p>Время начала: {{ object.mailing.datetime_start }}</p>
+<p>Время окончания: {{ object.mailing.datetime_finish }}</p>
+<p>Периодичность: {{ object.mailing.get_period_display }}</p>
+<p>Статус: {{ object.mailing.get_status_display }}</p>
+
+{% if object.mailing.clients.all %}
+<p>Кому:
+    {% for client in object.mailing.clients.all %}
+    {{ client.email }}{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+</p>
+{% else %}
+<p>Кому: -</p>
+{% endif %}
+
+<p>Попытка: {{ object.try_time }}</p>
+<p>Статус попытки: {{ object.get_try_status_display }}</p>
+<p>Ответ сервера: {{ object.server_answer }}</p>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mail Spark</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Mail Spark</h5>
+    <nav class="ms-5">
+        <a href="{% url 'mailing:index' %}" class="p-2 btn btn-outline-primary">Главная</a>
+
+        <a href="{% url 'customers:customer_list' %}" class="p-2 btn btn-outline-primary">Клиенты</a>
+        <a href="{% url 'message:message_list' %}" class="p-2 btn btn-outline-primary">Сообщения</a>
+        <a href="{% url 'mailing:mailing_list' %}" class="p-2 btn btn-outline-primary">Рассылки</a>
+        <a href="{% url 'mailing:log_list' %}" class="p-2 btn btn-outline-primary">Статистика</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'users:logout' %}" class="p-2 btn btn-outline-primary">Выйти</a>
+        {% else %}
+            <a href="{% url 'users:login' %}" class="p-2 btn btn-outline-primary">Войти</a>
+            <a href="{% url 'users:register' %}" class="p-2 btn btn-outline-primary">Регистрация</a>
+        {% endif %}
+
+        <a href="{% url 'admin:index' %}" class="p-2 btn btn-outline-success">Управление блогом</a>
+
+    </nav>
+</div>
+
+{% block content %}
+{% endblock %}
+
+<footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <div class="row">
+        <div class="col-12 col-md">
+            121099, Москва, Смоленская площадь, 13/21<br>
+            Все права защищены.
+            <p class="mb-1">{% now 'Y' %}</p>
+        </div>
+    </div>
+</footer>
+</div>

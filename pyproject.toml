@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "mailing-service"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pytz = "^2024.1"
+django-apscheduler = "^0.6.2"
+apscheduler = "^3.10.4"
+
+
+[tool.poetry.group.dev.dependencies]
+django = "4.2.2"
+psycopg2 = "^2.9.9"
+redis = "^5.0.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

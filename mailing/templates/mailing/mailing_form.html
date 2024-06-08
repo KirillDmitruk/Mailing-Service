@@ -1,0 +1,47 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+<main>
+    <form method="post" enctype="multipart/form-data">
+        <div class="album py-3 bg-body-tertiary">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        {% csrf_token %}
+                        <div class="card shadow-lg">
+                            <div class="card-body">
+                                {{ form.as_p }}
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-sm btn-block btn-outline-success">
+                                    {% if object %}
+                                    Изменить
+                                    {% else %}
+                                    Создать
+                                    {% endif %}
+                                </button>
+                                <a type="button" class="btn btn-sm btn-block btn-outline-danger"
+                                   href="{% url 'mailing:index' %}">
+                                    Отменить
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% if object %}
+                    <div class="col-md-6">
+                        <div class="card shadow-lg">
+                            <div class="card-body">
+                                {{ formset.management_form }}
+                                {% for form in formset.forms %}
+                                {{ form.as_p }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+{% endblock %}

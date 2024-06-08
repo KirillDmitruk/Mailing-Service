@@ -1,0 +1,55 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Клиенты</h1>
+</div>
+
+<div class="container">
+    <div class="btn-group">
+        <a href="{% url 'customers:customer_create' %}"
+           class="btn btn-block btn-outline-primary">Добавить нового</a>
+    </div>
+
+    <br><br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Email</th>
+            <th scope="col">Детали</th>
+        </tr>
+        </thead>
+        {% for object in object_list %}
+        <tbody>
+        <tr>
+            <th scope="row">{{ object.slug}}</th>
+            <td>{{ object.last_name}}</td>
+            <td>{{ object.first_name}}</td>
+            <td>{{ object.email}}</td>
+            <td>
+                </button><a href="{% url 'customers:customer_detail' object.slug %}"
+                            class="btn btn-outline-warning">Подробнее</a>
+            </td>
+        </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+
+
+    <div id="pages" align="center">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page.obj.previous_page_number }}">Предыдущая</a>
+        {% endif %}
+        <span class="current">
+       Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+   </span>
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
+        {% endif %}
+    </div>
+
+{% endblock %}

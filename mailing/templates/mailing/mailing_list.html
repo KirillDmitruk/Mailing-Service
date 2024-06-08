@@ -1,0 +1,50 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+<div class="btn-group">
+    <a href="{% url 'mailing:mailing_create' %}"
+       class="btn btn-sm btn-outline-secondary">Создать</a>
+</div>
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for object in object_list %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <p class="card-text">{{ object.message }}</p>
+                        <p class="card-text">{{ object.clients }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="{% url 'mailing:mailing_detail' object.slug %}"
+                                   class="btn btn-sm btn-outline-secondary">Подробнее</a>
+                                <a href="{% url 'mailing:mailing_update' object.slug %}"
+                                   class="btn btn-sm btn-outline-secondary">Изменить</a>
+                                <a href="{% url 'mailing:mailing_delete' object.slug %}"
+                                   class="btn btn-sm btn-outline-secondary">Удалить</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</table>
+
+
+<div id="pages" align="center">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page.obj.previous_page_number }}">Предыдущая</a>
+    {% endif %}
+    <span class="current">
+       Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+   </span>
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
+    {% endif %}
+</div>
+
+
+{% endblock %}
