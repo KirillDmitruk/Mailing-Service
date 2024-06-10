@@ -10,12 +10,14 @@ python = "^3.12"
 pytz = "^2024.1"
 django-apscheduler = "^0.6.2"
 apscheduler = "^3.10.4"
+psycopg2 = "^2.9.9"
 
 
 [tool.poetry.group.dev.dependencies]
 django = "4.2.2"
-psycopg2 = "^2.9.9"
 redis = "^5.0.5"
+pillow = "^10.3.0"
+python-dotenv = "^1.0.1"
 
 [build-system]
 requires = ["poetry-core"]
