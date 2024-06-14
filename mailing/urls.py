@@ -14,6 +14,6 @@ urlpatterns = [
     path('mailing_delete/<slug:slug>/', MailingDeleteView.as_view(), name='mailing_delete'),
     path('mailing_detail/<slug:slug>/', MailingDetailView.as_view(), name='mailing_detail'),
     path('log_list/', LogListView.as_view(), name='log_list'),
-    path('log_view/<int:pk>/', LogDetailView.as_view(), name='log_detail'),
+    path('log_view/<int:slug>/', LogDetailView.as_view(), name='log_detail'),
     path('403error/', AccessErrorView.as_view(), name='access_error'),
 ]

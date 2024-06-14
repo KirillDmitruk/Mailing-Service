@@ -9,7 +9,7 @@ class MailingForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Mailing
-        exclude = ('created_by',)
+        exclude = ('created_by', 'slug',)
 
 
 class MailingManagerForm(StyleFormMixin, forms.ModelForm):

@@ -2,6 +2,7 @@ import random
 
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.text import slugify
 from django.views.generic import ListView, CreateView, TemplateView, DeleteView, UpdateView, DetailView
 
 from customers.models import Customer
@@ -86,6 +87,7 @@ class MailingCreateView(CreateView):
         if form.is_valid():
             product = form.save()
             product.created_by = self.request.user
+            product.slug = slugify(product.topic_mailing)  # Автоматическое заполнение slug по названию рассылки
             product.save()
 
         return super().form_valid(form)

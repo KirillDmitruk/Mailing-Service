@@ -9,4 +9,4 @@ class MessageForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Message
-        exclude = ('created_by',)
+        exclude = ('created_by', 'slug',)

@@ -1,5 +1,6 @@
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.text import slugify
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
 from message.forms import MessageForm
@@ -27,7 +28,6 @@ class MessageListView(ListView):
 class MessageCreateView(CreateView):
     """Контроллер создания рассылки"""
     model = Message
-    fields = '__all__'
     form_class = MessageForm
     success_url = reverse_lazy('message:message_list')
 
@@ -35,6 +35,7 @@ class MessageCreateView(CreateView):
         if form.is_valid():
             product = form.save()
             product.created_by = self.request.user
+            product.slug = slugify(product.topic)  # Автоматическое заполнение slug по теме
             product.save()
 
         return super().form_valid(form)

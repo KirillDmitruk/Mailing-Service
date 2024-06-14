@@ -1,47 +1,38 @@
 {% extends 'mailing/base.html' %}
-
 {% block content %}
-<main>
-    <form method="post" enctype="multipart/form-data">
-        <div class="album py-3 bg-body-tertiary">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">
+        {% if object %}
+        Редактировать
+        {% else %}
+        Добавить сообщение
+        {% endif %}
+    </h1>
+</div>
+
+<div class="container">
+    <div class="col-12">
+    <div class="row text-start">
+        <div class="col-6">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <div class="card shadow-lg">
-                            <div class="card-body">
-                                {{ form.as_p }}
-                            </div>
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-sm btn-block btn-outline-success">
-                                    {% if object %}
-                                    Изменить
-                                    {% else %}
-                                    Создать
-                                    {% endif %}
-                                </button>
-                                <a type="button" class="btn btn-sm btn-block btn-outline-danger"
-                                   href="{% url 'mailing:index' %}">
-                                    Отменить
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    {% if object %}
-                    <div class="col-md-6">
-                        <div class="card shadow-lg">
-                            <div class="card-body">
-                                {{ formset.management_form }}
-                                {% for form in formset.forms %}
-                                {{ form.as_p }}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-outline-success">
+                            {% if object %}
+                                Сохранить
+                            {% else %}
+                                Создать
+                            {% endif %}
+                        </button>
+                        <a href="{% url 'message:message_list' %}" class="btn btn-outline-warning">Отмена</a>
+                    </form>
                 </div>
             </div>
         </div>
-    </form>
-</main>
+    </div>
+    </div>
+
 {% endblock %}

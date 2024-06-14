@@ -1,7 +1,9 @@
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.text import slugify
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
+from customers.forms import CustomerForm
 from customers.models import Customer
 
 
@@ -26,13 +28,14 @@ class CustomerListView(ListView):
 class CustomerCreateView(CreateView):
     """Контроллер создания рассылки"""
     model = Customer
-    fields = '__all__'
+    form_class = CustomerForm
     success_url = reverse_lazy('customers:customer_list')
 
     def form_valid(self, form):  # автоматическое присвоение автора
         if form.is_valid():
             contact = form.save()
             contact.created_by = self.request.user
+            contact.slug = slugify(contact.first_name)  # Автоматическое заполнение slug по имени
             contact.save()
 
         return super().form_valid(form)

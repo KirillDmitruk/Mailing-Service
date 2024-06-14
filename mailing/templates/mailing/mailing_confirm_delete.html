@@ -5,11 +5,11 @@
     <div class="row">
         <div class="col-6">
             <div class="card">
-                <p class="card-text">Действительно хотите удалить "{{ object.message }}" ?</p>
+                <p class="card-text">Действительно хотите удалить "{{ object.topic_mailing }}" ?</p>
                 <div class="card-body">
                     <form method="post">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">
+                        <button type="submit" class="btn btn-sm btn-danger">
                             Удалить
                         </button>
                         <a href="{% url 'mailing:mailing_list' %}"
