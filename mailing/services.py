@@ -38,6 +38,8 @@ def send_mail_func(mailing):
 
 
 def send_mails():
+    MY_TIME_ZONE = pytz.timezone(TIME_ZONE)
+    NOW = datetime.now(MY_TIME_ZONE)
     """Запускает рассылки, меняет их статусы, проверяет периодичность"""
     mailings = (Mailing.objects.filter(status__in=['created', 'started']).filter(datetime_start__lte=NOW).
                 prefetch_related('clients').select_related('message'))
