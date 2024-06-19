@@ -64,12 +64,18 @@ class MailingListView(ListView):
     model = Mailing
     paginate_by = 9  # количество элементов на одну страницу
     ordering = ['-id']
+    permission_required = 'mailing.can_view_all_mailing'
 
     def get_queryset(self, *args, **kwargs):  # отображение только тех рассылок, которые созданы пользователем
         queryset = super().get_queryset()
         if not self.request.user.is_manager:  # менеджеру доступны все рассылки
             queryset = queryset.filter(created_by=self.request.user.pk)
         return queryset
+
+    def dispatch(self, request, *args, **kwargs):  # запрет доступа без авторизации
+        if self.request.user.is_anonymous:
+            return redirect('mailing:access_error')
+        return super().dispatch(request, *args, **kwargs)
 
 
 class MailingCreateView(CreateView):
@@ -147,7 +153,8 @@ class LogDetailView(DetailView):
 
     def dispatch(self, request, *args, **kwargs):  # доступ к логу только по рассылке, которая создана пользователем
         obj = self.get_object()
-        if (obj.mailing.created_by != request.user) and (not self.request.user.is_manager):  # менеджеру доступны все логи
+        if (obj.mailing.created_by != request.user) and (
+        not self.request.user.is_manager):  # менеджеру доступны все логи
             return redirect('mailing:access_error')
         return super().dispatch(request, *args, **kwargs)
 

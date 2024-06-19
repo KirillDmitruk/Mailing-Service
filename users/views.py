@@ -2,7 +2,6 @@ import random
 import secrets  # 5
 import string
 
-from django.contrib.auth.forms import PasswordResetForm
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
@@ -59,10 +58,7 @@ class ProfileView(UpdateView):
 
 class PasswordResetView(FormView):
     """Контроллер для воостановления пароля"""
-
-    model = User
-    form_class = PasswordResetForm
-    template_name = "password_reset.html"
+    template_name = "users/password_reset.html"
     success_url = reverse_lazy("users:login")
 
     def form_valid(self, form):
@@ -90,7 +86,6 @@ class PasswordResetView(FormView):
 
 class UserUpdateView(ManagerRequiredMixin, UpdateView):
     """Контроллер редактирования пользователя"""
-
     model = User
     form_class = UserStatusForm
     success_url = reverse_lazy('users:user_list')
@@ -105,6 +100,6 @@ class UserListView(ListView):
     def dispatch(self, request, *args, **kwargs):  # отображение списка только для менеджера
         if self.request.user.is_anonymous:
             return redirect('mailing:access_error')
-        elif not self.request.user.is_manager:
-            return redirect('mailing:access_error')
+        # elif not self.request.user.is_manager:
+        #     return redirect('mailing:access_error')
         return super().dispatch(request, *args, **kwargs)

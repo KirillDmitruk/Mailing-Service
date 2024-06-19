@@ -5,45 +5,41 @@
 </div>
 
 <div class="container">
-   <br>
-   <table class="table">
-   <thead>
-       <tr>
-       <th scope="col">id</th>
-       <th scope="col">Рассылка</th>
-       <th scope="col">Контакт</th>
-       <th scope="col">Статус</th>
-       </tr>
-   </thead>
-   {% for object in object_list %}
-   <tbody>
-      <tr>
-      <th scope="row">{{ object.pk }}</th>
-      <td>{{ object.mailing.message.subject }}</td>
-      <td>{{ object.clients.email }}</td>
-      <td>
-      {% for client in object.mailing.clients.all %}
-      {{ client.email }}{% if not forloop.last %}, {% endif %}
-      {% endfor %}
-    </td>
-      <td>{{ object.try_status }}</td>
-      <td>
-          <a href="{% url 'mailing:log_detail' object.pk %}" class="btn btn-outline-warning">Подробнее</a>
-      </td>
-      </tr>
-   </tbody>
-   {% endfor %}
-   </table>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Рассылка</th>
+            <th scope="col">Контакт</th>
+            <th scope="col">Статус</th>
+        </tr>
+        </thead>
+        {% for object in object_list %}
+        <tbody>
+        <tr>
+            <th scope="row">{{ object.id }}</th>
+            <td>{{ object.mailing }}</td>
+            <td>{{ object.created_by }}</td>
+            <td>{{ object.server_answer }}</td>
+            <td>
+                </button><a href="{% url 'mailing:mailing_detail' object.slug %}" class="btn btn-outline-warning">Подробнее</a>
+            </td>
+        </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
 
 <div id="pages" align="center">
-   {% if page_obj.has_previous %}
-       <a href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
-   {% endif %}
-   <span class="current">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+    {% endif %}
+    <span class="current">
        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
    </span>
-   {% if page_obj.has_next %}
-       <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
-   {% endif %}
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
+    {% endif %}
 </div>
 {% endblock %}

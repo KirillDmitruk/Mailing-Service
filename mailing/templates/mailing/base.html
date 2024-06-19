@@ -14,20 +14,29 @@
     <h5 class="my-0 mr-md-auto font-weight-normal">Mail Spark</h5>
     <nav class="ms-5">
         <a href="{% url 'mailing:index' %}" class="p-2 btn btn-outline-primary">Главная</a>
-
-        <a href="{% url 'customers:customer_list' %}" class="p-2 btn btn-outline-primary">Клиенты</a>
+        {% if user.is_manager %}
+        <a href="{% url 'users:user_list' %}" class="p-2 btn btn-outline-primary">Пользователи</a>
+        {% endif %}
+        {% if user.is_authenticated %}
+        {% if not user.is_staff or user.is_superuser%}
+        <a href="{% url 'customers:customer_list' %}" class="p-2 btn btn-outline-primary">Контакты</a>
         <a href="{% url 'message:message_list' %}" class="p-2 btn btn-outline-primary">Сообщения</a>
         <a href="{% url 'mailing:mailing_list' %}" class="p-2 btn btn-outline-primary">Рассылки</a>
         <a href="{% url 'mailing:log_list' %}" class="p-2 btn btn-outline-primary">Статистика</a>
-        {% if user.is_authenticated %}
-            <a href="{% url 'users:logout' %}" class="p-2 btn btn-outline-primary">Выйти</a>
-        {% else %}
-            <a href="{% url 'users:login' %}" class="p-2 btn btn-outline-primary">Войти</a>
-            <a href="{% url 'users:register' %}" class="p-2 btn btn-outline-primary">Регистрация</a>
         {% endif %}
-
+        <a href="{% url 'blog:article_list' %}" class="p-2 btn btn-outline-primary">Блог</a>
+        {% if user.is_superuser %}
+        <a href="{% url 'admin:index' %}" class="p-2 btn btn-outline-success">Админка</a>
+        {% elif user.is_staff %}
         <a href="{% url 'admin:index' %}" class="p-2 btn btn-outline-success">Управление блогом</a>
-
+        {% endif %}
+        <a href="{% url 'users:profile' %}" class="p-2 btn btn-outline-success">Профиль</a>
+        <a href="{% url 'users:logout' %}" class="p-2 btn btn-outline-success">Выйти</a>
+        {% else %}
+        <a href="{% url 'blog:article_list' %}" class="p-2 btn btn-outline-primary">Блог</a>
+        <a href="{% url 'users:register' %}" class="p-2 btn btn-outline-primary">Регистрация</a>
+        <a href="{% url 'users:login' %}" class="p-2 btn btn-outline-primary">Войти</a>
+        {% endif %}
     </nav>
 </div>
 
@@ -43,4 +52,5 @@
         </div>
     </div>
 </footer>
-</div>
+</body>
+</html>

@@ -12,8 +12,7 @@ class StyleFormMixin:
 
 
 class UserProfileForm(UserChangeForm):
-    """Форма профиля"""
-
+    """Изменение профиля"""
     class Meta:
         model = User
         fields = ('email', 'first_name', 'last_name', 'phone',)

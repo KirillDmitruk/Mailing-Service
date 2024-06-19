@@ -6,8 +6,10 @@
         <div class="card-body">
             <p class="card-text">Тема: {{ object.topic }}</p>
             <p class="card-text">Текст сообщения: {{ object.text }}</p>
-            <div class="d-flex justify-content-between align-items-center">
-            </div>
+            <p class="card-text">Автор: {{ object.created_by }}</p>
+            <div class="d-flex justify-content-between align-items-center"></div>
+            <a href="{% url 'message:message_update' object.slug %}" class="btn btn-outline-primary">Изменить</a>
+            <a href="{% url 'message:message_list' %}" class="btn btn-outline-primary">Назад</a>
         </div>
     </div>
 </div>

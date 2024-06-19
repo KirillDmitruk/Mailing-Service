@@ -18,7 +18,7 @@ class MessageListView(ListView):
             return redirect('mailing:access_error')
         return super().dispatch(request, *args, **kwargs)
 
-    def get_queryset(self, *args, **kwargs):  # # отображение только тех сообщений, которые созданы пользователем
+    def get_queryset(self, *args, **kwargs):  # отображение только тех сообщений, которые созданы пользователем
         queryset = super().get_queryset()
         if not self.request.user.is_manager:  # менеджеру доступны все сообщения
             queryset = queryset.filter(created_by=self.request.user.pk)
@@ -44,7 +44,6 @@ class MessageCreateView(CreateView):
 class MessageUpdateView(UpdateView):
     """Контроллер редактирования рассылки"""
     model = Message
-    fields = '__all__'
     form_class = MessageForm
     success_url = reverse_lazy('message:message_list')
 

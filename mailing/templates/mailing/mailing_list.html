@@ -6,12 +6,12 @@
 </div>
 
 <div class="container">
-    {% if not user.is_manager %}
+
     <div class="btn-group">
         <a href="{% url 'mailing:mailing_create' %}"
            class="btn btn-block btn-outline-primary">Добавить новую</a>
     </div>
-    {% endif %}
+
 
     <div class="container">
         <br>
@@ -22,6 +22,7 @@
                 <th scope="col">Сообщение</th>
                 <th scope="col">Периодичность</th>
                 <th scope="col">Статус</th>
+                <th scope="col">Автор</th>
                 <th scope="col">Детали</th>
             </tr>
             </thead>
@@ -32,6 +33,7 @@
                 <td>{{ object.message }}</td>
                 <td>{{ object.get_period_display }}</td>
                 <td>{{ object.get_status_display }}</td>
+                <td>{{ object.created_by }}</td>
                 <td>
                     </button><a href="{% url 'mailing:mailing_detail' object.slug %}" class="btn btn-outline-warning">Подробнее</a>
                     </button><a href="{% url 'mailing:mailing_delete' object.slug %}" class="btn btn-outline-danger">Удалить</a>

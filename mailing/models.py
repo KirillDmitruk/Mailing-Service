@@ -34,7 +34,8 @@ class Mailing(models.Model):
         (FINISHED, 'Завершена'),
     )
 
-    topic_mailing = models.CharField(max_length=150, unique=True, null=True, blank=True, verbose_name='название рассылки')
+    topic_mailing = models.CharField(max_length=150, unique=True, null=True, blank=True,
+                                     verbose_name='название рассылки')
     message = models.ForeignKey(Message, on_delete=models.CASCADE, verbose_name='message')
     clients = models.ManyToManyField(Customer, verbose_name='контакты клиентов')
     datetime_start = models.DateTimeField(verbose_name='время начала рассылки')

@@ -22,19 +22,16 @@
                            class="btn btn-block btn-outline-primary">Посмотреть все</a>
                         {% if not user.is_manager %}
                         <a href="{% url 'customers:customer_create' %}"
-                           class="btn btn-block btn-outline-primary">Добавить новое</a>
+                           class="btn btn-block btn-outline-primary">Добавить нового</a>
                         {% endif %}
                     </div>
                     {% elif user.is_superuser %}
-                    <br>
                     <div class="btn-group">
                         <a href="{% url 'customers:customer_list' %}"
                            class="btn btn-block btn-outline-primary">Посмотреть все</a>
                         <a href="{% url 'customers:customer_create' %}"
                            class="btn btn-block btn-outline-primary">Добавить нового</a>
                     </div>
-                    {% else %}
-                    <br>
                     {% endif %}
                 </div>
             </div>
@@ -110,8 +107,6 @@
                     {% elif user.is_superuser %}
                     <a href="{% url 'mailing:log_list' %}"
                        class="btn btn-block btn-outline-primary">Посмотреть <br>отчеты</a>
-
-
                     {% endif %}
                 </div>
             </div>
@@ -121,37 +116,42 @@
     <p class="lead fst-italic display-6 text-center">О нашем сервисе в цифрах</p>
     <div class="row text-center">
         <div class="col-lg-4">
-            <svg class="bd-placeholder-img rounded-circle" width="130" height="130" xmlns="http://www.w3.org/2000/svg"
-                 role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <svg class="bd-placeholder-img rounded-circle" width="130" height="130"
+                 xmlns="http://www.w3.org/2000/svg"
+                 role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice"
+                 focusable="false">
                 <title></title>
                 <rect width="100%" height="100%" fill="#83cbea"/>
                 <text x="43%" y="50%" fill="#000" dy=".3em" font-weight="bold" font-size="2em">{{ mailing_count }}
                 </text>
             </svg>
 
-            <h3> созданных рассылок</h3>
+            <h3>Созданных рассылок</h3>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
-            <svg class="bd-placeholder-img rounded-circle" width="130" height="130" xmlns="http://www.w3.org/2000/svg"
-                 role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <svg class="bd-placeholder-img rounded-circle" width="130" height="130"
+                 xmlns="http://www.w3.org/2000/svg"
+                 role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice"
+                 focusable="false">
                 <title></title>
                 <rect width="100%" height="100%" fill="#83cbea"/>
                 <text x="43%" y="50%" fill="#000" dy=".3em" font-weight="bold" font-size="2em">{{ mailing_started_count }}
                 </text>
             </svg>
 
-            <h3>рассылок запущено</h3>
+            <h3>Рассылок запущено</h3>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
-            <svg class="bd-placeholder-img rounded-circle" width="130" height="130" xmlns="http://www.w3.org/2000/svg"
-                 role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <svg class="bd-placeholder-img rounded-circle" width="130" height="130"
+                 xmlns="http://www.w3.org/2000/svg"
+                 role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice"
+                 focusable="false">
                 <title></title>
                 <rect width="100%" height="100%" fill="#83cbea"/>
                 <text x="43%" y="50%" fill="#000" dy=".3em" font-weight="bold" font-size="2em">{{ mailing_clients_count }}
                 </text>
             </svg>
-
-            <h3>уникальных клиентов</h3>
+            <h3>Уникальных клиентов</h3>
         </div><!-- /.col-lg-4 -->
     </div><!-- /.row -->
     <br><br>
