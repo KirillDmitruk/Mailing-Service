@@ -20,19 +20,21 @@
             <th scope="col">Фамилия</th>
             <th scope="col">Имя</th>
             <th scope="col">Email</th>
+            <th scope="col">Создал</th>
             <th scope="col">Детали</th>
         </tr>
         </thead>
         {% for object in object_list %}
         <tbody>
         <tr>
-            <th scope="row">{{ object.slug}}</th>
-            <td>{{ object.last_name}}</td>
-            <td>{{ object.first_name}}</td>
-            <td>{{ object.email}}</td>
+            <th scope="row">{{ object.slug }}</th>
+            <td>{{ object.last_name }}</td>
+            <td>{{ object.first_name }}</td>
+            <td>{{ object.email }}</td>
+            <td>{{ object.created_by }}</td>
             <td>
-                </button><a href="{% url 'customers:customer_detail' object.slug %}"
-                            class="btn btn-outline-warning">Подробнее</a>
+                </button><a href="{% url 'customers:customer_detail' object.slug %}" class="btn btn-outline-warning">Подробнее</a>
+                </button><a href="{% url 'customers:customer_delete' object.slug %}" class="btn btn-outline-danger">Удалить</a>
             </td>
         </tr>
         </tbody>

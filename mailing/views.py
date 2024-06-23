@@ -64,13 +64,13 @@ class MailingListView(ListView):
     model = Mailing
     paginate_by = 9  # количество элементов на одну страницу
     ordering = ['-id']
-    permission_required = 'mailing.can_view_all_mailing'
 
-    def get_queryset(self, *args, **kwargs):  # отображение только тех рассылок, которые созданы пользователем
-        queryset = super().get_queryset()
-        if not self.request.user.is_manager:  # менеджеру доступны все рассылки
-            queryset = queryset.filter(created_by=self.request.user.pk)
-        return queryset
+
+    # def get_queryset(self, *args, **kwargs):  # отображение только тех рассылок, которые созданы пользователем
+    #     queryset = super().get_queryset()
+    #     if not self.request.user.is_manager:  # менеджеру доступны все рассылки
+    #         queryset = queryset.filter(created_by=self.request.user.pk)
+    #     return queryset
 
     def dispatch(self, request, *args, **kwargs):  # запрет доступа без авторизации
         if self.request.user.is_anonymous:
@@ -99,7 +99,7 @@ class MailingCreateView(CreateView):
         return super().form_valid(form)
 
 
-class MailingUpdateView(UpdateView):
+class MailingUpdateView(OwnerRequiredMixin, UpdateView):
     """Контроллер редактирования рассылки"""
     model = Mailing
     form_class = MailingForm
@@ -114,8 +114,13 @@ class MailingUpdateView(UpdateView):
 
         return super().get_form(form_class)
 
+    def dispatch(self, request, *args, **kwargs):  #
+        if self.request.user.is_manager:
+            return redirect('mailing:access_error')
+        return super().dispatch(request, *args, **kwargs)
 
-class MailingDeleteView(DeleteView):
+
+class MailingDeleteView(OwnerRequiredMixin, DeleteView):
     """Контроллер удаления рассылки"""
     model = Mailing
     success_url = reverse_lazy('mailing:mailing_list')

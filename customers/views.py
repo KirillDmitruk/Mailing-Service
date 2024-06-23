@@ -6,6 +6,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 
 from customers.forms import CustomerForm
 from customers.models import Customer
+from mailing.views import OwnerRequiredMixin
 
 
 class CustomerListView(ListView):
@@ -47,14 +48,14 @@ class CustomerCreateView(LoginRequiredMixin, CreateView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class CustomerUpdateView(UpdateView):
+class CustomerUpdateView(OwnerRequiredMixin, UpdateView):
     """Контроллер редактирования рассылки"""
     model = Customer
     fields = '__all__'
     success_url = reverse_lazy('customers:customer_list')
 
 
-class CustomerDeleteView(DeleteView):
+class CustomerDeleteView(OwnerRequiredMixin, DeleteView):
     """Контроллер удаления рассылки"""
     model = Customer
     success_url = reverse_lazy('customers:customer_list')

@@ -6,7 +6,15 @@
         <div class="card-body">
             <p class="card-text">Ф.И.О: {{ object.second_name }} {{ object.first_name }} {{ object.middle_name }}</p>
             <p class="card-text">Email: {{ object.email }}</p>
+            <p class="card-text">Автор: {{ object.created_by }}</p>
             <div class="d-flex justify-content-between align-items-center">
+            </div>
+            <div class="text-right">
+                <a href="{% url 'customers:customer_update' object.slug %}"
+                   class="btn btn-sm btn-outline-primary">Изменить</a>
+                <a href="{% url 'customers:customer_delete' object.slug %}"
+                   class="btn btn-sm btn-outline-danger">Удалить</a>
+                <a href="{% url 'customers:customer_list' %}" class="btn btn-sm btn-outline-warning">Назад</a>
             </div>
         </div>
     </div>
