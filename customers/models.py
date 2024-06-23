@@ -9,7 +9,7 @@ class Customer(models.Model):
     last_name = models.CharField(max_length=50, verbose_name='last name')
     middle_name = models.CharField(max_length=50, verbose_name='middle name')
     comment = models.TextField(verbose_name='comment')
-    slug = models.CharField(max_length=150, **NULLABLE, verbose_name='URL')
+    slug = models.CharField(max_length=150, **NULLABLE, verbose_name='URL', unique=True)
     created_by = models.ForeignKey('users.User', on_delete=models.CASCADE, null=True, blank=True, verbose_name='автор')
 
     def __str__(self):

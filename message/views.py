@@ -1,7 +1,8 @@
+from django.db import IntegrityError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.text import slugify
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, TemplateView
 
 from mailing.views import OwnerRequiredMixin
 from message.forms import MessageForm
@@ -36,8 +37,13 @@ class MessageCreateView(CreateView):
         if form.is_valid():
             product = form.save()
             product.created_by = self.request.user
-            product.slug = slugify(product.topic)  # Автоматическое заполнение slug по теме
-            product.save()
+            try:
+                product.slug = slugify(product.topic)  # Автоматическое заполнение slug по теме
+                product.save()
+            except IntegrityError as e:
+                # Обработка ошибки дублирования slug
+                product.delete()
+                return redirect('message:not_unique')
 
         return super().form_valid(form)
 
@@ -58,3 +64,8 @@ class MessageDeleteView(OwnerRequiredMixin, DeleteView):
 class MessageDetailView(DetailView):
     """Контроллер просмотра деталей """
     model = Message
+
+
+class NotUniqueView(TemplateView):
+    """Контроллер ошибки доступа"""
+    template_name = 'message/not_unique.html'

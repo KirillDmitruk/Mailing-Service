@@ -1,0 +1,25 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Ошибка уникальности</h1>
+</div>
+
+<div class="container">
+    <div class="row text-start">
+        <div class="col-lg-9 col-md-6 col-sm-12">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <h5>К сожалению, клиент с таким email уже создан.</h5>
+                    <a type="button" class="btn btn-sm btn-block btn-outline-warning"
+                       href="{% url 'customers:customer_create' %}">
+                        Вернуться к созданию
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

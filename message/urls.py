@@ -1,8 +1,8 @@
 from django.urls import path
 
 from message.apps import MessageConfig
-
-from message.views import MessageListView, MessageCreateView, MessageUpdateView, MessageDeleteView, MessageDetailView
+from message.views import MessageListView, MessageCreateView, MessageUpdateView, MessageDeleteView, MessageDetailView, \
+    NotUniqueView
 
 app_name = MessageConfig.name
 
@@ -12,4 +12,5 @@ urlpatterns = [
     path('message_update/<slug:slug>/', MessageUpdateView.as_view(), name='message_update'),
     path('message_delete/<slug:slug>/', MessageDeleteView.as_view(), name='message_delete'),
     path('message_detail/<slug:slug>/', MessageDetailView.as_view(), name='message_detail'),
+    path('not_unique/', NotUniqueView.as_view(), name='not_unique'),
 ]

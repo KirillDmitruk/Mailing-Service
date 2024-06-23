@@ -9,7 +9,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, verbose_name='email')
     phone = models.CharField(max_length=35, **NULLABLE, verbose_name='phone')
     token = models.CharField(max_length=100, **NULLABLE, verbose_name='token')  # 4
-    slug = models.CharField(max_length=100, **NULLABLE, verbose_name='URL')
+    slug = models.CharField(max_length=100, **NULLABLE, verbose_name='URL', unique=True)
 
     is_manager = models.BooleanField(default=False, blank=True, null=True, verbose_name='менеджер')  # права менеджера
 

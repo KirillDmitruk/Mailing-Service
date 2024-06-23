@@ -35,14 +35,14 @@ class Mailing(models.Model):
     )
 
     topic_mailing = models.CharField(max_length=150, unique=True, null=True, blank=True,
-                                     verbose_name='название рассылки')
+                                     verbose_name='mailing name')
     message = models.ForeignKey(Message, on_delete=models.CASCADE, verbose_name='message')
     clients = models.ManyToManyField(Customer, verbose_name='контакты клиентов')
     datetime_start = models.DateTimeField(verbose_name='время начала рассылки')
     datetime_finish = models.DateTimeField(verbose_name='время окончания рассылки')
     period = models.CharField(max_length=25, choices=PERIOD_CHOICES, default=DAILY, verbose_name='period')
     status = models.CharField(max_length=25, choices=STATUS_CHOICES, default=CREATED, verbose_name='status')
-    slug = models.CharField(max_length=150, **NULLABLE, verbose_name='URL')
+    slug = models.CharField(max_length=150, **NULLABLE, verbose_name='URL', unique=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, verbose_name='автор')
 
     def __str__(self):

@@ -35,8 +35,9 @@
                 <td>{{ object.get_status_display }}</td>
                 <td>{{ object.created_by }}</td>
                 <td>
-                    </button><a href="{% url 'mailing:mailing_detail' object.slug %}" class="btn btn-outline-warning">Подробнее</a>
-                    </button><a href="{% url 'mailing:mailing_delete' object.slug %}" class="btn btn-outline-danger">Удалить</a>
+                    </button><a href="{% url 'mailing:mailing_detail' object.slug %}"
+                                class="btn btn-outline-warning">Подробнее</a>
+
                 </td>
             </tr>
             </tbody>

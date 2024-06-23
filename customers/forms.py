@@ -9,3 +9,9 @@ class CustomerForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Customer
         exclude = ('created_by', 'slug',)
+
+class ErrorForm(StyleFormMixin, ModelForm):
+    """Форма для создания/редактирования клиента сервиса"""
+    class Meta:
+        model = Customer
+        exclude = ('created_by', 'slug',)

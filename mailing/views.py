@@ -1,5 +1,6 @@
 import random
 
+from django.db import IntegrityError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.text import slugify
@@ -65,7 +66,6 @@ class MailingListView(ListView):
     paginate_by = 9  # количество элементов на одну страницу
     ordering = ['-id']
 
-
     # def get_queryset(self, *args, **kwargs):  # отображение только тех рассылок, которые созданы пользователем
     #     queryset = super().get_queryset()
     #     if not self.request.user.is_manager:  # менеджеру доступны все рассылки
@@ -93,8 +93,13 @@ class MailingCreateView(CreateView):
         if form.is_valid():
             product = form.save()
             product.created_by = self.request.user
-            product.slug = slugify(product.topic_mailing)  # Автоматическое заполнение slug по названию рассылки
-            product.save()
+            try:
+                product.slug = slugify(product.topic_mailing)  # Автоматическое заполнение slug по названию рассылки
+                product.save()
+            except IntegrityError as e:
+                # Обработка ошибки дублирования slug
+                product.delete()
+                return redirect('mailing:not_unique')
 
         return super().form_valid(form)
 
@@ -159,7 +164,7 @@ class LogDetailView(DetailView):
     def dispatch(self, request, *args, **kwargs):  # доступ к логу только по рассылке, которая создана пользователем
         obj = self.get_object()
         if (obj.mailing.created_by != request.user) and (
-        not self.request.user.is_manager):  # менеджеру доступны все логи
+                not self.request.user.is_manager):  # менеджеру доступны все логи
             return redirect('mailing:access_error')
         return super().dispatch(request, *args, **kwargs)
 

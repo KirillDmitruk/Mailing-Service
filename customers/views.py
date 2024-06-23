@@ -1,8 +1,10 @@
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
-from django.shortcuts import redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import IntegrityError
+from django.http import HttpResponseRedirect, request
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.utils.text import slugify
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, TemplateView
 
 from customers.forms import CustomerForm
 from customers.models import Customer
@@ -37,8 +39,13 @@ class CustomerCreateView(LoginRequiredMixin, CreateView):
         if form.is_valid():
             contact = form.save()
             contact.created_by = self.request.user
-            contact.slug = slugify(contact.first_name)  # Автоматическое заполнение slug по имени
-            contact.save()
+            try:
+                contact.slug = slugify(contact.email)  # Автоматическое заполнение slug по имени
+                contact.save()
+            except IntegrityError as e:
+                # Обработка ошибки дублирования slug
+                contact.delete()
+                return redirect('customers:not_unique')
 
         return super().form_valid(form)
 
@@ -64,3 +71,8 @@ class CustomerDeleteView(OwnerRequiredMixin, DeleteView):
 class CustomerDetailView(DetailView):
     """Контроллер просмотра деталей рассылки"""
     model = Customer
+
+
+class NotUniqueView(TemplateView):
+    """Контроллер ошибки доступа"""
+    template_name = 'customers/not_unique.html'
