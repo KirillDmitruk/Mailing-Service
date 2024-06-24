@@ -37,14 +37,8 @@ class MessageCreateView(CreateView):
         if form.is_valid():
             product = form.save()
             product.created_by = self.request.user
-            try:
-                product.slug = slugify(product.topic)  # Автоматическое заполнение slug по теме
-                product.save()
-            except IntegrityError as e:
-                # Обработка ошибки дублирования slug
-                product.delete()
-                return redirect('message:not_unique')
-
+            product.slug = slugify(product.topic) + str(product.id)  # Автоматическое заполнение slug по теме
+            product.save()
         return super().form_valid(form)
 
 

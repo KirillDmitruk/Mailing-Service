@@ -39,13 +39,8 @@ class CustomerCreateView(LoginRequiredMixin, CreateView):
         if form.is_valid():
             contact = form.save()
             contact.created_by = self.request.user
-            try:
-                contact.slug = slugify(contact.email)  # Автоматическое заполнение slug по имени
-                contact.save()
-            except IntegrityError as e:
-                # Обработка ошибки дублирования slug
-                contact.delete()
-                return redirect('customers:not_unique')
+            contact.slug = slugify(contact.email) + str(contact.id)  # Автоматическое заполнение slug по имени
+            contact.save()
 
         return super().form_valid(form)
 

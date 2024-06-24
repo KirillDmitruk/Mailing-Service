@@ -93,14 +93,8 @@ class MailingCreateView(CreateView):
         if form.is_valid():
             product = form.save()
             product.created_by = self.request.user
-            try:
-                product.slug = slugify(product.topic_mailing)  # Автоматическое заполнение slug по названию рассылки
-                product.save()
-            except IntegrityError as e:
-                # Обработка ошибки дублирования slug
-                product.delete()
-                return redirect('mailing:not_unique')
-
+            product.slug = slugify(product.topic_mailing) + str(product.id)  # Автоматическое заполнение slug по названию рассылки
+            product.save()
         return super().form_valid(form)
 
 
